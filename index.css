@@ -1,0 +1,92 @@
+.main_head{
+}
+.main_search{
+	display: block;
+}
+#mainTable {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse; 
+}
+#mainTable th {
+	font-weight: bold;
+	padding: 5px;
+	background: #e5e5e5;
+	border: 1px solid #dddddd;
+	position: relative;
+}
+#mainTable td {
+	border: 1px solid #dddddd;
+	padding: 5px;
+}
+
+.sort_but_down{
+	position: relative;
+}
+.sort_but_up{
+	position: relative;
+}
+.sort_but_up, .sort_but_down{
+	height: 12px;
+	width: 30px;
+
+	display: inline-block;
+  	text-align: center;
+}
+.table_head_buttons{
+	padding: 0px 0px;
+	margin-right: 3px;
+	margin-left: auto;
+}
+.table_head_text{
+	flex-grow: 10;
+	text-align:center;
+	vertical-align: middle;
+}
+form{
+	display: flex;
+}
+.table_head_th{
+	display: flex;
+    flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.sort_but_up:after{
+	position: absolute;
+	top: 0px;
+	left: 8px;
+	content: '';
+	width: 0;
+    height: 0;
+  	display: inline-block;
+  	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid #000000;
+    margin-bottom: 12px;
+
+}
+.sort_but_down:after{
+	position: absolute;
+	bottom: 0px;
+	left: 8px;
+	content: '';
+	width: 0;
+    height: 0;
+  	display: inline-block;
+  	border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid #000000;
+}
+.hidden{
+	display: none;
+}
+body {
+	font-size:14px;
+	padding: 15px 20px;
+}
+.select_wrp {
+	width: 300px;
+	margin: 0 auto;
+}
