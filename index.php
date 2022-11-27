@@ -2,7 +2,7 @@
 	include('connection.php');
 
 	$name_field = array(
-							"lname" => "Фамлия",
+							"lname" => "Фамилия",
 							"fname" => "Имя",
 							"mname" => "Отчество",
 							"s_name" => "Улица",
@@ -33,7 +33,7 @@
 	else{
 		$ordered = "";
 	}
-	$sql = 'select l.lname, f.fname, m.mname, s.s_name, building, apart, phone_number from main
+	$sql = 'select id, l.lname, f.fname, m.mname, s.s_name, building, apart, phone_number from main
 			join fname as f on f.f_id = fname_fk
 			join lname as l on l.l_id = lname_fk
 			join mname as m on m.m_id = mname_fk
@@ -56,6 +56,10 @@
 			$resMain = $resMain."<td>".$arr[$i]["building"]."</td>";
 			$resMain = $resMain."<td>".$arr[$i]["apart"]."</td>";
 			$resMain = $resMain."<td>".$arr[$i]["phone_number"]."</td>";
+			$resMain = $resMain."<td><form action='delete_item.php' method='post'>
+											<input type='hidden' name='delete_id' value='".$arr[$i]["id"]."'>
+											<button type='submit' class='delete_but'>╳ </button>
+										</form></td>";
 			$resMain = $resMain."</tr>";
 		}
 	}
@@ -93,8 +97,8 @@
 
 		<div class="main-search">
 			<div id="search_box">
-				<form action='index.php' method='get'>
-					<span>Поле для поиска: </span>
+				<form id="search_form" action='index.php' method='get'>
+					<span id="main_search_span">Поле для поиска: </span>
 					<select id="search_field" name="search_field" size="1">
 						<?php
 						$res_select = "";
@@ -110,7 +114,7 @@
 		  	 		</select>
 					<input id="search" type='search' name='search' value='<?php echo $cur_search; ?>'>
 					<button id="search_btn" type='submit' class='search_but'>Найти</button>
-					<span>Расширенный поиск </span><input form="wide_form" name="chkWide" type="checkbox" id="chkWideSearch" value="true">
+					<span id="wide_search_field">Расширенный поиск </span><input form="wide_form" name="chkWide" type="checkbox" id="chkWideSearch" value="true">
 				</form>
 			</div>
 
@@ -216,7 +220,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
+
 
 
 	<div>
@@ -322,9 +326,10 @@
 			</form>
 		</div>
 	</div>
+	</div>
 
 	 <?php
-				if($_GET["search_field"] != ""){
+				if(array_key_exists('search_field', $_GET) != "" || array_key_exists('chkWide', $_GET)){
 					echo "<h3> Показаны результаты с удовлетворяющие условию: ".$name_field[$_GET["search_field"]]." — ".$_GET["search"]." </h3> <a href='index.php'>Показать все записи</a>";
 				}
 			?>

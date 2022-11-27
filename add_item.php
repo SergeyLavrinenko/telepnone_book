@@ -7,6 +7,9 @@
 		$res = (pg_query($dbconn, $sql));
 		$arr = pg_fetch_all($res);
 		if($arr == NULL){
+			$sql = "insert into lname(lname) values ('".$_POST["lname"]."') RETURNING l_id;";
+			$res = (pg_query($dbconn, $sql));
+			$lname_id = pg_fetch_row($res)[0];
 		}
 		else{
 			$lname_id = $arr[0]["l_id"];
@@ -16,6 +19,9 @@
 		$res = (pg_query($dbconn, $sql));
 		$arr = pg_fetch_all($res);
 		if($arr == NULL){
+			$sql = "insert into fname(fname) values ('".$_POST["fname"]."') RETURNING f_id;";
+			$res = (pg_query($dbconn, $sql));
+			$fname_id = pg_fetch_row($res)[0];
 		}
 		else{
 			$fname_id = $arr[0]["f_id"];
@@ -25,6 +31,9 @@
 		$res = (pg_query($dbconn, $sql));
 		$arr = pg_fetch_all($res);
 		if($arr == NULL){
+			$sql = "insert into mname(mname) values ('".$_POST["mname"]."') RETURNING m_id;";
+			$res = (pg_query($dbconn, $sql));
+			$mname_id = pg_fetch_row($res)[0];
 		}
 		else{
 			$mname_id = $arr[0]["m_id"];
@@ -34,6 +43,9 @@
 		$res = (pg_query($dbconn, $sql));
 		$arr = pg_fetch_all($res);
 		if($arr == NULL){
+			$sql = "insert into streets(s_name) values ('".$_POST["s_name"]."') RETURNING s_id;";
+			$res = (pg_query($dbconn, $sql));
+			$street_id = pg_fetch_row($res)[0];
 		}
 		else{
 			$street_id = $arr[0]["s_id"];

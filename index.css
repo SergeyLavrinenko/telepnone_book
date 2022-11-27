@@ -1,4 +1,27 @@
 .main_head{
+	font-family: sans-serif;
+	font-size: 20px;
+	margin: 0px 0px 10px 0px;
+}
+#main_search_span{
+	margin: 0px 10px 0px 0px;
+	line-height: 30px;
+}
+#wide_search_field{
+	margin: 0px 0px 0px 10px;
+	line-height: 30px;
+}
+.main-search{
+	margin: 10px 10px 10px 0px;
+	padding: 10px;
+	border: 2px solid black;
+}
+input[type=text],  input[type=search], select{
+	padding: 2px 0px;
+	font-size: inherit;
+}
+#wide_search_box{
+	padding: 10px 0px 0px 0px;
 }
 .main_search{
 	display: block;
