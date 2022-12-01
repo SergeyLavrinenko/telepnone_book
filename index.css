@@ -1,7 +1,20 @@
+.head{
+  background: #a3dbdb;
+  width: 100%;
+  padding: 0px 0px;
+  margin-bottom: 25px;
+}
+.head-box{
+  background: #a3dbdb;
+  width: initial;
+  padding: 20px 10px;
+}
 .main_head{
+	background: #e4f2fa;
 	font-family: sans-serif;
 	font-size: 20px;
-	margin: 0px 0px 10px 0px;
+	border-top: 0;
+	border: 5px solid #a3dbdb;
 }
 #main_search_span{
 	margin: 0px 10px 0px 0px;
@@ -13,35 +26,68 @@
 }
 .main-search{
 	margin: 10px 10px 10px 0px;
-	padding: 10px;
-	border: 2px solid black;
+	padding: 0px 10px 10px 10px;
+	display: block;
 }
 input[type=text],  input[type=search], select{
-	padding: 2px 0px;
+	padding: 4px 10px;
 	font-size: inherit;
 }
 #wide_search_box{
-	padding: 10px 0px 0px 0px;
+	padding: 30px 0px 0px 0px;
 }
-.main_search{
+.add_but{
+	width: 100%;
+}
+.show-all{
+	outline: none;text-decoration: none;
 	display: block;
+	padding: 2px;
+	text-align: center;
+	color: black;
+  	width: 140px;
+  	border: 1px solid rgba(33,43,52,1);
+  	background: rgb(251,251,251) linear-gradient(rgb(251,251,251), rgb(211,211,211));
+  	margin: 10px 0px;
+}
+.show-all:hover{
+	background: rgb(241,241,241) linear-gradient(rgb(241,241,241), rgb(211,211,211));
+}
+.show-all:active{
+	background: rgb(151,151,151) linear-gradient(rgb(151,151,151), rgb(191,191,191));
+}
+#wide_search_table td{
+	padding: 0px 10px 2px 0px;
 }
 #mainTable {
 	width: 100%;
 	margin-bottom: 20px;
-	border: 1px solid #dddddd;
-	border-collapse: collapse; 
+	border: 1px solid #808080;
+	border-collapse: collapse;
+	background: #fafafa;
 }
 #mainTable th {
 	font-weight: bold;
 	padding: 5px;
-	background: #e5e5e5;
+	background: #c5c5c5;
 	border: 1px solid #dddddd;
 	position: relative;
 }
 #mainTable td {
 	border: 1px solid #dddddd;
 	padding: 5px;
+}
+.add_tr{
+	background: #e1e1e1;
+}
+#search_field{
+	border: 0px;
+	outline: none;
+	margin: 0px 10px 0px 0px;
+}
+.butt{
+	width: 30px;
+	height: 30px;
 }
 
 .sort_but_down{
@@ -112,4 +158,34 @@ body {
 .select_wrp {
 	width: 300px;
 	margin: 0 auto;
+}
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0px 5px;
+  text-align: center;
+}
+ul{
+  padding-inline-start: 0px;
+  margin-block-start: 0em;
+  margin-block-end: 2em;
+}
+li{
+  list-style-type: none;
+}
+.button-menu:link, .button-menu:visited {
+  background-color: #cdf1f1;
+  color: black;
+  padding: 13px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: solid 3px #edf1f1;
+
+}
+
+.button-menu:hover {
+  background-color: #c0dede;
 }

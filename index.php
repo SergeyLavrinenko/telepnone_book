@@ -58,7 +58,7 @@
 			$resMain = $resMain."<td>".$arr[$i]["phone_number"]."</td>";
 			$resMain = $resMain."<td><form action='delete_item.php' method='post'>
 											<input type='hidden' name='delete_id' value='".$arr[$i]["id"]."'>
-											<button type='submit' class='delete_but'>╳ </button>
+											<button type='submit' class='butt delete_but'>╳ </button>
 										</form></td>";
 			$resMain = $resMain."</tr>";
 		}
@@ -85,6 +85,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 	 <link rel="stylesheet" href="index.css">
+	 <link rel="stylesheet" href="head.css">
 	 <script src="jquery-3.6.1.js"></script>
 	 <script src="jquery.maskedinput.min.js"></script>
 	 <script src="index.js"></script>
@@ -93,244 +94,155 @@
 </head>
 
 <body>
-	<div class="main_head">
+	<div class="head">
+		<div class="head-box">
+			<h2>Телефонный справочник</h2>
+		</div>
 
-		<div class="main-search">
-			<div id="search_box">
-				<form id="search_form" action='index.php' method='get'>
-					<span id="main_search_span">Поле для поиска: </span>
-					<select id="search_field" name="search_field" size="1">
-						<?php
-						$res_select = "";
-						foreach ($name_field as $i => $val){
-							$sel = "";
-							if($i == $_GET["search_field"]){
-								$sel = "selected";
+		<div class="main_head">
+
+			<div class="main-search">
+				<div>
+					<ul>
+						<li>
+							<a class="button-menu" href="editTable.php" id="but-lname">Редактировать данные родительских таблиц</a>
+						</li>
+					</ul>
+				</div>
+
+				<div id="search_box">
+					<form id="search_form" action='index.php' method='get'>
+						<span id="main_search_span">Поле для поиска: </span>
+						<select id="search_field" name="search_field" size="1">
+							<?php
+							$res_select = "";
+							foreach ($name_field as $i => $val){
+								$sel = "";
+								if($i == $_GET["search_field"]){
+									$sel = "selected";
+								}
+								$res_select = $res_select."<option ".$sel." value='".$i."'>".$val."</option>";
 							}
-							$res_select = $res_select."<option ".$sel." value='".$i."'>".$val."</option>";
-						}
-						echo $res_select;
-						?>
-		  	 		</select>
-					<input id="search" type='search' name='search' value='<?php echo $cur_search; ?>'>
-					<button id="search_btn" type='submit' class='search_but'>Найти</button>
-					<span id="wide_search_field">Расширенный поиск </span><input form="wide_form" name="chkWide" type="checkbox" id="chkWideSearch" value="true">
-				</form>
-			</div>
+							echo $res_select;
+							?>
+			  	 		</select>
+						<input id="search" type='search' name='search' value='<?php echo $cur_search; ?>'>
+						<button id="search_btn" type='submit' class='search_but'>Найти</button>
+						<span id="wide_search_field">Расширенный поиск </span><input form="wide_form" name="chkWide" type="checkbox" id="chkWideSearch" value="true">
+					</form>
+				</div>
 
 
-			<div id="wide_search_box" class="hidden">
-				<form action='index.php' method='get' id="wide_form">
-					<table id="wide_search_table">
-						<tr>
-							<td> Фамилия</td>
-							<td>
-								<input type="text" class="form-control autocomplete" autocomplete="off" list="lname" placeholder="Введите фамилию" name="lname" class="wide_search_fields">
-								<input type="hidden" name="lnameId" class="wide_search_fields"/>
-								<datalist id="lname">
-										<?php
-											$res_oprions = "";
-											$sql = "select * from lname;";
-											$res = (pg_query($dbconn, $sql));
-											$arr = pg_fetch_all($res);
-											foreach ($arr as $i => $value) {
-												$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["lname"], " ")."'>";
-											}
-											echo $res_oprions;
-										 ?>
-								</datalist>
-							</td>
-						</tr>
-						<tr>
-							<td> Имя</td>
-							<td>
-								<input type="text" class="form-control autocomplete" autocomplete="off" list="fname" placeholder="Введите имя" name="fname" class="wide_search_fields">
-								<input type="hidden" name="fnameId" class="wide_search_fields"/>
-								<datalist id="fname">
-										<?php
-											$res_oprions = "";
-											$sql = "select * from fname;";
-											$res = (pg_query($dbconn, $sql));
-											$arr = pg_fetch_all($res);
-											foreach ($arr as $i => $value) {
-												$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["fname"], " ")."'>";
-											}
-											echo $res_oprions;
-										 ?>
-								</datalist>
-							</td>
-						</tr>
-						<tr>
-							<td> Отчество</td>
-							<td>
-								<input type="text" class="form-control autocomplete" autocomplete="off" list="mname" placeholder="Введите отчество" name="mname" class="wide_search_fields">
-								<input type="hidden" name="mnameId" class="wide_search_fields"/>
-								<datalist id="mname">
-										<?php
-											$res_oprions = "";
-											$sql = "select * from mname;";
-											$res = (pg_query($dbconn, $sql));
-											$arr = pg_fetch_all($res);
-											foreach ($arr as $i => $value) {
-												$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["mname"], " ")."'>";
-											}
-											echo $res_oprions;
-										 ?>
-								</datalist>
-							</td>
-						</tr>
-						<tr>
-							<td> Улица</td>
-							<td>
-								<input type="text" class="form-control autocomplete" autocomplete="off" list="s_name" placeholder="Введите улицу" name="s_name">
-								<input type="hidden" name="s_nameId" />
-								<datalist id="s_name">
-										<?php
-											$res_oprions = "";
-											$sql = "select * from streets;";
-											$res = (pg_query($dbconn, $sql));
-											$arr = pg_fetch_all($res);
-											foreach ($arr as $i => $value) {
-												$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["s_name"], " ")."'>";
-											}
-											echo $res_oprions;
-										 ?>
-								</datalist>
-							</td>
-						</tr>
-						<tr>
-							<td> Дом</td>
-							<td> <input type='text' placeholder="Введите номер дома" autocomplete="off" name='building' value=''></td>
-						</tr>
-						<tr>
-							<td> Квартира</td>
-							<td> <input type='text' placeholder="Введите номер квартиры" autocomplete="off" name='apart' value=''></td>
-						</tr>
-						<tr>
-							<td> Номер телефона</td>
-							<td><input type="text" placeholder="Введите телефон" autocomplete="off" class="phone_mask" name='phone_number'> </td>
-								 <script>
-							        $(".phone_mask").mask("+9(999)999-99-99");
-							    </script>
-						</tr>
-						<tr>
-							<td> <button type='submit' class='add_but'>Найти </button></td>
-						</tr>
-					</table>
-				</form>
+				<div id="wide_search_box" class="hidden">
+					<form action='index.php' method='get' id="wide_form">
+						<table id="wide_search_table">
+							<tr>
+								<td> Фамилия</td>
+								<td>
+									<input type="text" class="form-control autocomplete" autocomplete="off" list="lname" placeholder="Введите фамилию" name="lname" class="wide_search_fields">
+									<input type="hidden" name="lnameId" class="wide_search_fields"/>
+									<datalist id="lname">
+											<?php
+												$res_options = "";
+												$sql = "select * from lname order by 2;";
+												$res = (pg_query($dbconn, $sql));
+												$arr = pg_fetch_all($res);
+												foreach ($arr as $i => $value) {
+													$res_options = $res_options."<option data-id='".$i."' value='".trim($arr[$i]["lname"], " ")."'>";
+												}
+												echo $res_options;
+											 ?>
+									</datalist>
+								</td>
+							</tr>
+							<tr>
+								<td> Имя</td>
+								<td>
+									<input type="text" class="form-control autocomplete" autocomplete="off" list="fname" placeholder="Введите имя" name="fname" class="wide_search_fields">
+									<input type="hidden" name="fnameId" class="wide_search_fields"/>
+									<datalist id="fname">
+											<?php
+												$res_oprions = "";
+												$sql = "select * from fname order by 2;";
+												$res = (pg_query($dbconn, $sql));
+												$arr = pg_fetch_all($res);
+												foreach ($arr as $i => $value) {
+													$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["fname"], " ")."'>";
+												}
+												echo $res_oprions;
+											 ?>
+									</datalist>
+								</td>
+							</tr>
+							<tr>
+								<td> Отчество</td>
+								<td>
+									<input type="text" class="form-control autocomplete" autocomplete="off" list="mname" placeholder="Введите отчество" name="mname" class="wide_search_fields">
+									<input type="hidden" name="mnameId" class="wide_search_fields"/>
+									<datalist id="mname">
+											<?php
+												$res_oprions = "";
+												$sql = "select * from mname order by 2;";
+												$res = (pg_query($dbconn, $sql));
+												$arr = pg_fetch_all($res);
+												foreach ($arr as $i => $value) {
+													$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["mname"], " ")."'>";
+												}
+												echo $res_oprions;
+											 ?>
+									</datalist>
+								</td>
+							</tr>
+							<tr>
+								<td> Улица</td>
+								<td>
+									<input type="text" class="form-control autocomplete" autocomplete="off" list="s_name" placeholder="Введите улицу" name="s_name">
+									<input type="hidden" name="s_nameId" />
+									<datalist id="s_name">
+											<?php
+												$res_oprions = "";
+												$sql = "select * from streets order by 2;";
+												$res = (pg_query($dbconn, $sql));
+												$arr = pg_fetch_all($res);
+												foreach ($arr as $i => $value) {
+													$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["s_name"], " ")."'>";
+												}
+												echo $res_oprions;
+											 ?>
+									</datalist>
+								</td>
+							</tr>
+							<tr>
+								<td> Дом</td>
+								<td> <input type='text' placeholder="Введите номер дома" autocomplete="off" name='building' value=''></td>
+							</tr>
+							<tr>
+								<td> Квартира</td>
+								<td> <input type='text' placeholder="Введите номер квартиры" autocomplete="off" name='apart' value=''></td>
+							</tr>
+							<tr>
+								<td> Номер телефона</td>
+								<td><input type="text" placeholder="Введите телефон" autocomplete="off" class="phone_mask" name='phone_number'> </td>
+									 <script>
+								        $(".phone_mask").mask("+9(999)999-99-99");
+								    </script>
+							</tr>
+							<tr>
+								<td colspan="2"> <button type='submit' class='add_but'>Найти </button></td>
+							</tr>
+						</table>
+					</form>
+				</div>
 			</div>
 		</div>
-
-
-
-	<div>
-		<a onclick='hide_insert()'>Добавление новой записи</a>
-		<div class ="hidden insert_block">
-			<form action='add_item.php' method='post'>
-				<table id="insert_table">
-					<tr>
-						<td> Фамилия</td>
-						<td>
-							<input type="text" class="form-control autocomplete" autocomplete="off" list="lname" placeholder="Введите фамилию" name="lname">
-							<input type="hidden" name="lnameId" />
-							<datalist id="lname">
-									<?php
-										$res_oprions = "";
-										$sql = "select * from lname;";
-										$res = (pg_query($dbconn, $sql));
-										$arr = pg_fetch_all($res);
-										foreach ($arr as $i => $value) {
-											$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["lname"], " ")."'>";
-										}
-										echo $res_oprions;
-									 ?>
-							</datalist>
-						</td>
-					</tr>
-					<tr>
-						<td> Имя</td>
-						<td>
-							<input type="text" class="form-control autocomplete" autocomplete="off" list="fname" placeholder="Введите имя" name="fname">
-							<input type="hidden" name="fnameId" />
-							<datalist id="fname">
-									<?php
-										$res_oprions = "";
-										$sql = "select * from fname;";
-										$res = (pg_query($dbconn, $sql));
-										$arr = pg_fetch_all($res);
-										foreach ($arr as $i => $value) {
-											$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["fname"], " ")."'>";
-										}
-										echo $res_oprions;
-									 ?>
-							</datalist>
-						</td>
-					</tr>
-					<tr>
-						<td> Отчество</td>
-						<td>
-							<input type="text" class="form-control autocomplete" autocomplete="off" list="mname" placeholder="Введите отчество" name="mname">
-							<input type="hidden" name="mnameId" />
-							<datalist id="mname">
-									<?php
-										$res_oprions = "";
-										$sql = "select * from mname;";
-										$res = (pg_query($dbconn, $sql));
-										$arr = pg_fetch_all($res);
-										foreach ($arr as $i => $value) {
-											$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["mname"], " ")."'>";
-										}
-										echo $res_oprions;
-									 ?>
-							</datalist>
-						</td>
-					</tr>
-					<tr>
-						<td> Улица</td>
-						<td>
-							<input type="text" class="form-control autocomplete" autocomplete="off" list="s_name" placeholder="Введите улицу" name="s_name">
-							<input type="hidden" name="s_nameId" />
-							<datalist id="s_name">
-									<?php
-										$res_oprions = "";
-										$sql = "select * from streets;";
-										$res = (pg_query($dbconn, $sql));
-										$arr = pg_fetch_all($res);
-										foreach ($arr as $i => $value) {
-											$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["s_name"], " ")."'>";
-										}
-										echo $res_oprions;
-									 ?>
-							</datalist>
-						</td>
-					</tr>
-					<tr>
-						<td> Дом</td>
-						<td> <input type='text' placeholder="Введите номер дома" autocomplete="off" name='building' value=''></td>
-					</tr>
-					<tr>
-						<td> Квартира</td>
-						<td> <input type='text' placeholder="Введите номер квартиры" autocomplete="off" name='apart' value=''></td>
-					</tr>
-					<tr>
-						<td> Номер телефона</td>
-						<td><input type="text" placeholder="Введите телефон" autocomplete="off" class="phone_mask" name='phone_number'> </td>
-							 <script>
-						        $(".phone_mask").mask("+9(999)999-99-99");
-						    </script>
-					</tr>
-					<tr>
-						<td> <button type='submit' class='add_but'>Добавить </button></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</div>
 	</div>
 
 	 <?php
+				//if(array_key_exists('search_field', $_GET) != "" || array_key_exists('chkWide', $_GET)){
+				//	echo "<h3> Показаны результаты с удовлетворяющие условию: ".$name_field[$_GET["search_field"]]." — ".$_GET["search"]." </h3> <a href='index.php'>Показать все записи</a>";
+				//}
 				if(array_key_exists('search_field', $_GET) != "" || array_key_exists('chkWide', $_GET)){
-					echo "<h3> Показаны результаты с удовлетворяющие условию: ".$name_field[$_GET["search_field"]]." — ".$_GET["search"]." </h3> <a href='index.php'>Показать все записи</a>";
+					echo "<a class='show-all' href='index.php'>Показать все записи</a>";
 				}
 			?>
 
@@ -343,10 +255,87 @@
 			<th><div class="table_head_th"><div class="table_head_text">Дом </div><div class="table_head_buttons"><?php echo $formSortBeginUp."building".$formSortEndUp; echo $formSortBeginDown."building DESC".$formSortEndDown;?></div></div></th>
 			<th><div class="table_head_th"><div class="table_head_text">Квартира </div><div class="table_head_buttons"><?php echo $formSortBeginUp."apart".$formSortEndUp; echo $formSortBeginDown."apart DESC".$formSortEndDown;?></div></div></th>
 			<th><div class="table_head_th"><div class="table_head_text">Номер телефона </div><div class="table_head_buttons"><?php echo $formSortBeginUp."phone_number".$formSortEndUp; echo $formSortBeginDown."phone_number DESC".$formSortEndDown;?></div></div></th>
+			<th></th>
+		</tr>
+		<tr class="add_tr">
+			<form action='add_item.php' method='post'>
+				<td>
+					<input type="text" class="form-control autocomplete" autocomplete="off" list="lname" placeholder="Введите фамилию" name="lname">
+					<input type="hidden" name="lnameId" />
+					<datalist id="lname">
+								<?php
+									$res_oprions = "";
+									$sql = "select * from lname;";
+									$res = (pg_query($dbconn, $sql));
+									$arr = pg_fetch_all($res);
+									foreach ($arr as $i => $value) {
+										$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["lname"], " ")."'>";
+									}
+									echo $res_oprions;
+								 ?>
+					</datalist>
+				</td>
+				<td>
+					<input type="text" class="form-control autocomplete" autocomplete="off" list="fname" placeholder="Введите имя" name="fname">
+					<input type="hidden" name="fnameId" />
+					<datalist id="fname">
+							<?php
+								$res_oprions = "";
+								$sql = "select * from fname;";
+								$res = (pg_query($dbconn, $sql));
+								$arr = pg_fetch_all($res);
+								foreach ($arr as $i => $value) {
+									$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["fname"], " ")."'>";
+								}
+								echo $res_oprions;
+							 ?>
+					</datalist>
+				</td>
+				<td>
+					<input type="text" class="form-control autocomplete" autocomplete="off" list="mname" placeholder="Введите отчество" name="mname">
+					<input type="hidden" name="mnameId" />
+					<datalist id="mname">
+							<?php
+								$res_oprions = "";
+								$sql = "select * from mname;";
+								$res = (pg_query($dbconn, $sql));
+								$arr = pg_fetch_all($res);
+								foreach ($arr as $i => $value) {
+									$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["mname"], " ")."'>";
+								}
+								echo $res_oprions;
+							 ?>
+					</datalist>
+				</td>
+				<td>
+					<input type="text" class="form-control autocomplete" autocomplete="off" list="s_name" placeholder="Введите улицу" name="s_name">
+					<input type="hidden" name="s_nameId" />
+					<datalist id="s_name">
+							<?php
+								$res_oprions = "";
+								$sql = "select * from streets;";
+								$res = (pg_query($dbconn, $sql));
+								$arr = pg_fetch_all($res);
+								foreach ($arr as $i => $value) {
+									$res_oprions = $res_oprions."<option data-id='".$i."' value='".trim($arr[$i]["s_name"], " ")."'>";
+								}
+								echo $res_oprions;
+							 ?>
+					</datalist>
+				</td>
+				<td> <input type='text' placeholder="Введите номер дома" autocomplete="off" name='building' value=''></td>
+				<td> <input type='text' placeholder="Введите номер квартиры" autocomplete="off" name='apart' value=''></td>
+				<td><input type="text" placeholder="Введите телефон" autocomplete="off" class="phone_mask" name='phone_number'> </td>
+					<script>
+					   $(".phone_mask").mask("+9(999)999-99-99");
+					</script>
+				<td> <button type='submit' class='butt add_but'>+ </button></td>
+			</form>
 		</tr>
 		<?php echo $resMain; ?>
 	</table>
 
+	<div class="footer">Телефонный справочник</div>
 </body>
 </html>
 
